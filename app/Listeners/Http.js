@@ -12,6 +12,7 @@ const Http = exports = module.exports = {};
  * @param  {Object} response
  */
 Http.handleError = function* (error, request, response) {
+  console.log(error);
   /**
    * DEVELOPMENT REPORTER
    */
@@ -30,6 +31,7 @@ Http.handleError = function* (error, request, response) {
          console.log('Error handled properly');
        });
   }
+
 
   yield response.jsonApiError(error);
 };

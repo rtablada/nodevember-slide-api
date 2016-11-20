@@ -11,6 +11,9 @@
     "seed": "node ace db:seed --force",
     "lint": "eslint"
   },
+  "engines": {
+    "node": "7.0.0"
+  },
   "author": "",
   "license": "MIT",
   "description": "",
