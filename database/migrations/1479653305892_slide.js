@@ -8,6 +8,7 @@ class SlideSchema extends Schema {
     this.create('slides', (table) => {
       table.increments();
       table.text('content');
+      table.integer('order').unsigned();
       table.integer('reason_id').references('reasons.id');
       table.timestamps();
     });
