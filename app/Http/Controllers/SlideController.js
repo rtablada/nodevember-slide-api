@@ -1,7 +1,7 @@
 'use strict';
 
 const Slide = use('App/Model/Slide');
-const attributes = ['content'];
+const attributes = ['content', 'order'];
 
 class SlideController {
 
