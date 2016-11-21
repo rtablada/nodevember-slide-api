@@ -3,6 +3,12 @@
 const Slide = use('App/Model/Slide');
 const attributes = ['content', 'order'];
 
+const Env = use('Env');
+
+function isDevelopment() {
+  return Env.get('NODE_ENV') === 'development';
+}
+
 class SlideController {
 
   * index(request, response) {
@@ -16,7 +22,11 @@ class SlideController {
     const foreignKeys = {
       reason_id: request.jsonApi.getRelationId('reason'),
     };
-    const slide = yield Slide.create(Object.assign({}, input, foreignKeys));
+    const slide = yield new Slide(Object.assign({}, input, foreignKeys));
+
+    if (isDevelopment) {
+      yield slide.save();
+    }
 
     response.jsonApi('Slide', slide);
   }
@@ -39,7 +49,10 @@ class SlideController {
 
     const slide = yield Slide.with('reason').where({ id }).firstOrFail();
     slide.fill(Object.assign({}, input, foreignKeys));
-    yield slide.save();
+
+    if (isDevelopment) {
+      yield slide.save();
+    }
 
     response.jsonApi('Slide', slide);
   }
@@ -48,7 +61,10 @@ class SlideController {
     const id = request.param('id');
 
     const slide = yield Slide.query().where({ id }).firstOrFail();
-    yield slide.delete();
+
+    if (isDevelopment) {
+      yield slide.delete();
+    }
 
     response.status(204).send();
   }

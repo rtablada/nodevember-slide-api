@@ -3,6 +3,12 @@
 const Reason = use('App/Model/Reason');
 const attributes = ['title', 'number'];
 
+const Env = use('Env');
+
+function isDevelopment() {
+  return Env.get('NODE_ENV') === 'development';
+}
+
 class ReasonController {
 
   * index(request, response) {
@@ -15,7 +21,12 @@ class ReasonController {
     const input = request.jsonApi.getAttributesSnakeCase(attributes);
     const foreignKeys = {
     };
-    const reason = yield Reason.create(Object.assign({}, input, foreignKeys));
+
+    const reason = yield new Reason(Object.assign({}, input, foreignKeys));
+
+    if (isDevelopment) {
+      yield reason.save();
+    }
 
     response.jsonApi('Reason', reason);
   }
@@ -37,7 +48,10 @@ class ReasonController {
 
     const reason = yield Reason.with('slides').where({ id }).firstOrFail();
     reason.fill(Object.assign({}, input, foreignKeys));
-    yield reason.save();
+
+    if (isDevelopment) {
+      yield reason.save();
+    }
 
     response.jsonApi('Reason', reason);
   }
@@ -46,7 +60,10 @@ class ReasonController {
     const id = request.param('id');
 
     const reason = yield Reason.query().where({ id }).firstOrFail();
-    yield reason.delete();
+
+    if (isDevelopment) {
+      yield reason.delete();
+    }
 
     response.status(204).send();
   }
