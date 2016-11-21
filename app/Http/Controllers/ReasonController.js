@@ -24,7 +24,7 @@ class ReasonController {
 
     const reason = yield new Reason(Object.assign({}, input, foreignKeys));
 
-    if (isDevelopment) {
+    if (isDevelopment()) {
       yield reason.save();
     }
 
@@ -49,7 +49,7 @@ class ReasonController {
     const reason = yield Reason.with('slides').where({ id }).firstOrFail();
     reason.fill(Object.assign({}, input, foreignKeys));
 
-    if (isDevelopment) {
+    if (isDevelopment()) {
       yield reason.save();
     }
 
@@ -61,7 +61,7 @@ class ReasonController {
 
     const reason = yield Reason.query().where({ id }).firstOrFail();
 
-    if (isDevelopment) {
+    if (isDevelopment()) {
       yield reason.delete();
     }
 

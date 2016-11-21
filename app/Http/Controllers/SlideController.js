@@ -24,7 +24,7 @@ class SlideController {
     };
     const slide = yield new Slide(Object.assign({}, input, foreignKeys));
 
-    if (isDevelopment) {
+    if (isDevelopment()) {
       yield slide.save();
     }
 
@@ -50,7 +50,7 @@ class SlideController {
     const slide = yield Slide.with('reason').where({ id }).firstOrFail();
     slide.fill(Object.assign({}, input, foreignKeys));
 
-    if (isDevelopment) {
+    if (isDevelopment()) {
       yield slide.save();
     }
 
@@ -62,7 +62,7 @@ class SlideController {
 
     const slide = yield Slide.query().where({ id }).firstOrFail();
 
-    if (isDevelopment) {
+    if (isDevelopment()) {
       yield slide.delete();
     }
 
