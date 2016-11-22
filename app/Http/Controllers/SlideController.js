@@ -22,7 +22,7 @@ class SlideController {
     const foreignKeys = {
       reason_id: request.jsonApi.getRelationId('reason'),
     };
-    const slide = yield new Slide(Object.assign({}, input, foreignKeys));
+    const slide = new Slide(Object.assign({}, input, foreignKeys));
 
     if (isDevelopment()) {
       yield slide.save();

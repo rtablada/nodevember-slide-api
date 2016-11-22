@@ -22,7 +22,7 @@ class ReasonController {
     const foreignKeys = {
     };
 
-    const reason = yield new Reason(Object.assign({}, input, foreignKeys));
+    const reason = new Reason(Object.assign({}, input, foreignKeys));
 
     if (isDevelopment()) {
       yield reason.save();
